@@ -143,6 +143,18 @@ pub(crate) fn get_linker<'a>(
         LinkerFlavor::Unix(Cc::No) if sess.target.os == "aix" => {
             Box::new(AixLinker::new(cmd, sess)) as Box<dyn Linker>
         }
+        LinkerFlavor::Unix(Cc::No) if sess.target.llvm_target == "powerpc-apple-classic" => {
+            // Classic Mac OS PEF linker
+            Box::new(GccLinker {
+                cmd,
+                sess,
+                target_cpu,
+                hinted_static: None,
+                is_ld: true,
+                is_gnu: false,
+                uses_lld: true,
+            }) as Box<dyn Linker>
+        }
         LinkerFlavor::WasmLld(Cc::No) => Box::new(WasmLd::new(cmd, sess)) as Box<dyn Linker>,
         LinkerFlavor::Gnu(cc, _)
         | LinkerFlavor::Darwin(cc, _)
