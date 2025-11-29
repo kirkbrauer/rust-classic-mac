@@ -1,0 +1,15 @@
+[package]
+name = "classic_macos_rt"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal Rust runtime for PowerPC Classic Mac OS (System 7-9)"
+license = "MIT OR Apache-2.0"
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+# No dependencies - completely freestanding
+
+[features]
+default = []
